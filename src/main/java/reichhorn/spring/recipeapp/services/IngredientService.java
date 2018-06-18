@@ -4,9 +4,9 @@ import reichhorn.spring.recipeapp.commands.IngredientCommand;
 
 public interface IngredientService {
 
-    IngredientCommand findByRecipeIdAndIngredientId(Long recipeId, Long id);
+    IngredientCommand findByRecipeIdAndIngredientId(String recipeId, String id);
 
     IngredientCommand saveIngredientCommand(IngredientCommand command);
 
-    void deleteById(Long recipeId, Long ingredientId);
+    void deleteById(String recipeId, String ingredientId);
 }
