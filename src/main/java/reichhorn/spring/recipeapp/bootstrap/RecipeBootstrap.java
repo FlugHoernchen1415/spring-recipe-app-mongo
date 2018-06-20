@@ -1,6 +1,7 @@
 package reichhorn.spring.recipeapp.bootstrap;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -10,6 +11,7 @@ import reichhorn.spring.recipeapp.model.*;
 import reichhorn.spring.recipeapp.repositories.CategoryRepository;
 import reichhorn.spring.recipeapp.repositories.RecipeRepository;
 import reichhorn.spring.recipeapp.repositories.UnitOfMeasureRepository;
+import reichhorn.spring.recipeapp.repositories.reactive.UnitOfMeasureReactiveRepository;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -23,6 +25,9 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     private final CategoryRepository categoryRepository;
     private final RecipeRepository recipeRepository;
     private final UnitOfMeasureRepository unitOfMeasureRepository;
+
+    @Autowired
+    UnitOfMeasureReactiveRepository reactiveRepository;
 
     public RecipeBootstrap(CategoryRepository categoryRepository,
                            RecipeRepository recipeRepository, UnitOfMeasureRepository unitOfMeasureRepository) {
@@ -38,6 +43,9 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         loadUom();
         recipeRepository.saveAll(getRecipes());
         log.debug("Loading Bootstrap Data");
+
+        log.error("#######");
+        log.error(reactiveRepository.count().block().toString());
     }
 
     private void loadCategories(){

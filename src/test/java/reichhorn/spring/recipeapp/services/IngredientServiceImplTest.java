@@ -89,7 +89,7 @@ public class IngredientServiceImplTest {
 
         ingredient.setId("3");
         recipe.addIngredient(ingredient);
-        ingredient.setRecipe(recipe);
+        // ingredient.setRecipe(recipe);
 
         Optional<Recipe> recipeOptional = Optional.of(recipe);
 
