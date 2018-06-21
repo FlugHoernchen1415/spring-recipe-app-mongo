@@ -1,12 +1,13 @@
 package reichhorn.spring.recipeapp.services;
 
+import reactor.core.publisher.Mono;
 import reichhorn.spring.recipeapp.commands.IngredientCommand;
 
 public interface IngredientService {
 
-    IngredientCommand findByRecipeIdAndIngredientId(String recipeId, String id);
+    Mono<IngredientCommand> findByRecipeIdAndIngredientId(String recipeId, String id);
 
-    IngredientCommand saveIngredientCommand(IngredientCommand command);
+    Mono<IngredientCommand> saveIngredientCommand(IngredientCommand command);
 
-    void deleteById(String recipeId, String ingredientId);
+    Mono<Void> deleteById(String recipeId, String ingredientId);
 }

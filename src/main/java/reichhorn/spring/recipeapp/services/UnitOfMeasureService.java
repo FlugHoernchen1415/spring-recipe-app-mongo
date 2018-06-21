@@ -1,10 +1,9 @@
 package reichhorn.spring.recipeapp.services;
 
+import reactor.core.publisher.Flux;
 import reichhorn.spring.recipeapp.commands.UnitOfMeasureCommand;
-
-import java.util.Set;
 
 public interface UnitOfMeasureService {
 
-    Set<UnitOfMeasureCommand> listAllUoms();
+    Flux<UnitOfMeasureCommand> listAllUoms();
 }

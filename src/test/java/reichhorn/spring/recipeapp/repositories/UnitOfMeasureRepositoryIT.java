@@ -28,9 +28,10 @@ public class UnitOfMeasureRepositoryIT {
 
     @Before
     public void setUp() throws Exception {
+
+        recipeRepository.deleteAll();
         unitOfMeasureRepository.deleteAll();
         categoryRepository.deleteAll();
-        recipeRepository.deleteAll();
 
         RecipeBootstrap recipeBootstrap =
                 new RecipeBootstrap(categoryRepository, recipeRepository, unitOfMeasureRepository);
@@ -39,7 +40,7 @@ public class UnitOfMeasureRepositoryIT {
     }
 
     @Test
-    public void findByDescription() {
+    public void findByDescription() throws Exception {
 
         Optional<UnitOfMeasure> uomOptinal = unitOfMeasureRepository.findByDescription("Teaspoon");
 
@@ -47,7 +48,7 @@ public class UnitOfMeasureRepositoryIT {
     }
 
     @Test
-    public void findByDescriptionCup() {
+    public void findByDescriptionCup() throws Exception {
 
         Optional<UnitOfMeasure> uomOptinal = unitOfMeasureRepository.findByDescription("Cup");
 

@@ -8,6 +8,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import reactor.core.publisher.Mono;
 import reichhorn.spring.recipeapp.commands.RecipeCommand;
 import reichhorn.spring.recipeapp.services.ImageService;
 import reichhorn.spring.recipeapp.services.RecipeService;
@@ -50,7 +51,7 @@ public class ImageControllerTest {
         RecipeCommand recipeCommand = new RecipeCommand();
         recipeCommand.setId("1");
 
-        when(recipeService.findCommandById(anyString())).thenReturn(recipeCommand);
+        when(recipeService.findCommandById(anyString())).thenReturn(Mono.just(recipeCommand));
 
         // when
         mockMvc.perform(get("/recipe/1/image"))
@@ -64,6 +65,8 @@ public class ImageControllerTest {
     public void handleImagePost() throws Exception {
         MockMultipartFile multipartFile = new MockMultipartFile("imagefile", "testing.txt",
                 "text/plain", "Spring Framework".getBytes());
+
+        when(imageService.saveImageFile(anyString(), any())).thenReturn(Mono.empty());
 
         mockMvc.perform(multipart("/recipe/1/image").file(multipartFile))
                 .andExpect(status().is3xxRedirection())
@@ -89,7 +92,7 @@ public class ImageControllerTest {
 
         recipeCommand.setImage(bytes);
 
-        when(recipeService.findCommandById(anyString())).thenReturn(recipeCommand);
+        when(recipeService.findCommandById(anyString())).thenReturn(Mono.just(recipeCommand));
 
         // when
         MockHttpServletResponse response = mockMvc.perform(get("/recipe/1/recipeimage"))
@@ -99,13 +102,5 @@ public class ImageControllerTest {
         byte[] responseBytes = response.getContentAsByteArray();
 
         assertEquals(s.getBytes().length, responseBytes.length);
-    }
-
-    @Test
-    public void testGetImageNumberFormatException() throws Exception {
-
-        mockMvc.perform(get("/recipe/asdf/recipeimage"))
-                .andExpect(status().isBadRequest())
-                .andExpect(view().name("400error"));
     }
 }

@@ -1,20 +1,19 @@
 package reichhorn.spring.recipeapp.services;
 
-import reichhorn.spring.recipeapp.commands.IngredientCommand;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reichhorn.spring.recipeapp.commands.RecipeCommand;
 import reichhorn.spring.recipeapp.model.Recipe;
 
-import java.util.Set;
-
 public interface RecipeService {
 
-    Set<Recipe> getRecipes();
+    Flux<Recipe> getRecipes();
 
-    Recipe findById(String recipeId);
+    Mono<Recipe> findById(String recipeId);
 
-    RecipeCommand saveRecipeCommand(RecipeCommand command);
+    Mono<RecipeCommand> saveRecipeCommand(RecipeCommand command);
 
-    RecipeCommand findCommandById(String recipeId);
+    Mono<RecipeCommand> findCommandById(String recipeId);
 
-    void deleteById(String recipeId);
+    Mono<Void> deleteById(String recipeId);
 }
